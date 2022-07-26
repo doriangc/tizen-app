@@ -13,7 +13,7 @@ class _ExerciseState extends State<Exercise> {
   Widget build(BuildContext context) {
     return ExercisePage(
       exerciseTitle: 'Push-Ups',
-      endTime: DateTime.now().add(Duration(seconds: 60)),
+      endTime: DateTime.now().add(Duration(seconds: 120)),
       exerciseNum: 1,
     );
   }

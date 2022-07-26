@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ExercisePage extends StatefulWidget {
   final DateTime endTime;
@@ -17,6 +18,8 @@ class ExercisePage extends StatefulWidget {
 }
 
 class _ExercisePageState extends State<ExercisePage> {
+  Duration? lastDurationSinceStart;
+
   @override
   void initState() {
     super.initState();
@@ -28,11 +31,21 @@ class _ExercisePageState extends State<ExercisePage> {
     final currentDatetime = DateTime.now();
     final durationSinceStart = widget.endTime.difference(currentDatetime);
 
+    if (durationSinceStart.inSeconds != lastDurationSinceStart?.inSeconds) {
+      HapticFeedback.heavyImpact();
+    }
+
+    lastDurationSinceStart = durationSinceStart;
+
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(widget.exerciseNum.toString()),
         Text(
-          '${durationSinceStart.inMinutes}:${durationSinceStart.inSeconds % 60}',
+          '${widget.exerciseNum.toString()} / 5',
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        Text(
+          '${durationSinceStart.inMinutes.toString().padLeft(2, '0')}:${(durationSinceStart.inSeconds % 60).toString().padLeft(2, '0')}',
           style: Theme.of(context).textTheme.headline1,
         ),
         Text(
